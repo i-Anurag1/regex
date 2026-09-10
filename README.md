@@ -1,42 +1,160 @@
-# Regex Compiler and Automata Visualizer
+<div align="center">
 
-A full-stack compiler-design laboratory for regular expressions. It turns a regex into tokens, an AST, Thompson NFA, subset-construction DFA, minimized DFA, and a deterministic simulation trace. The UI exposes the intermediate artifacts so the project works both as a teaching tool and as a portfolio project.
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=32&duration=3000&pause=1000&color=6366F1&center=true&vCenter=true&width=700&lines=RegexLab+%E2%80%94+Regex+Compiler;Thompson+NFA+%E2%86%92+Subset+DFA+%E2%86%92+Min-DFA;A+Compiler-Design+Workbench+for+Regular+Expressions" alt="Typing SVG" />
 
-## Stack
+<h3>Turn a regex into tokens, an AST, an NFA, a DFA, and a minimized DFA — visually.</h3>
 
-Frontend: React, TypeScript, Vite, Tailwind CSS, React Flow
-Backend: Python, FastAPI, Pydantic
-Algorithms: recursive-descent parsing, Thompson construction, epsilon closure, subset construction, partition-refinement DFA minimization
-Testing: Pytest, Vitest
-Deployment: Docker Compose, Nginx, GitHub Actions
+<p>
+  <img src="https://img.shields.io/github/stars/i-Anurag1/regex?style=for-the-badge&color=6366F1&logo=github" />
+  <img src="https://img.shields.io/github/forks/i-Anurag1/regex?style=for-the-badge&color=8B5CF6&logo=github" />
+  <img src="https://img.shields.io/github/license/i-Anurag1/regex?style=for-the-badge&color=22C55E" />
+  <img src="https://img.shields.io/github/actions/workflow/status/i-Anurag1/regex/ci.yml?style=for-the-badge&label=CI&logo=githubactions&logoColor=white" />
+</p>
 
-## Supported regex language
+<p>
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
+  <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
+  <img src="https://img.shields.io/badge/React_Flow-FF0072?style=for-the-badge&logo=react&logoColor=white" />
+</p>
 
-The compiler targets regular languages rather than engine-specific features. Supported syntax includes literals, implicit concatenation, `|`, `*`, `+`, `?`, grouping, epsilon (`ε` or `epsilon`), character classes, ranges, negated ASCII classes, `.`, escaped metacharacters, `\\d`, `\\D`, `\\w`, `\\W`, `\\s`, `\\S`, `\\xHH`, `\\uHHHH`, `^`, `$`, and bounded repetition `{m}`, `{m,n}`, `{m,}`. Repetition bounds are capped at 100 to keep automata finite and responsive.
+<p>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Pydantic-E92063?style=for-the-badge&logo=pydantic&logoColor=white" />
+  <img src="https://img.shields.io/badge/Pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white" />
+</p>
 
-Backreferences, lookarounds, conditionals, recursion, and engine-specific zero-width constructs are intentionally excluded because they are outside regular-language automata and would make the compiler semantics differ from the FAANG-style compiler pipeline demonstrated here.
+<p>
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white" />
+  <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" />
+</p>
 
-## Architecture
+<a href="#-quick-start">Quick Start</a> •
+<a href="#-architecture">Architecture</a> •
+<a href="#-supported-syntax">Syntax</a> •
+<a href="#-api">API</a> •
+<a href="#-demo-flow">Demo</a> •
+<a href="#-testing">Testing</a>
 
-`Regex -> Lexer -> Parser -> AST -> Thompson NFA -> Subset DFA -> Minimization -> Simulation`
+</div>
 
-Backend modules are separated into `lexer`, `parser`, `ast`, `automata`, `compiler`, `schemas`, `api`, and `core`. The frontend separates graph rendering, AST rendering, token tables, transitions, simulation, statistics, assistant, theory, and architecture pages.
+<br/>
 
-## Run locally
+## Overview
+
+**RegexLab** is a full-stack compiler-design laboratory for regular expressions — not a generic regex tester. It compiles a pattern through every classical stage of a regex engine and exposes each intermediate artifact in the UI, so it works equally well as a **teaching tool** and a **portfolio project**.
+
+```
+Regex → Lexer → Parser → AST → Thompson NFA → Subset DFA → Hopcroft Min-DFA → Simulation
+```
+
+<br/>
+
+## 🏗 Architecture
+
+```mermaid
+flowchart LR
+    A["📝 Regex String"] --> B["🔤 Lexer\n(Tokenizer)"]
+    B --> C["🌳 Recursive-Descent\nParser"]
+    C --> D["🌲 Abstract Syntax\nTree (AST)"]
+    D --> E["🔀 Thompson\nConstruction (NFA)"]
+    E --> F["⚡ Epsilon Closure +\nSubset Construction"]
+    F --> G["🎯 DFA"]
+    G --> H["✂️ Partition Refinement\n(Minimization)"]
+    H --> I["✅ Minimized DFA"]
+    I --> J["▶️ Deterministic\nSimulation"]
+
+    style A fill:#6366F1,color:#fff,stroke:#4338CA
+    style D fill:#8B5CF6,color:#fff,stroke:#6D28D9
+    style E fill:#EC4899,color:#fff,stroke:#BE185D
+    style G fill:#F59E0B,color:#fff,stroke:#B45309
+    style I fill:#22C55E,color:#fff,stroke:#15803D
+    style J fill:#06B6D4,color:#fff,stroke:#0E7490
+```
+
+### System layers
+
+```mermaid
+graph TB
+    subgraph Frontend["🖥️ Frontend — React + TypeScript + Vite"]
+        F1[Graph Rendering<br/>React Flow]
+        F2[AST Viewer]
+        F3[Token Tables]
+        F4[Transition Tables]
+        F5[Simulation Panel]
+        F6[Statistics]
+        F7[Assistant]
+        F8[Theory / Architecture Pages]
+    end
+
+    subgraph Backend["⚙️ Backend — FastAPI"]
+        B1[lexer]
+        B2[parser]
+        B3[ast]
+        B4[automata]
+        B5[compiler]
+        B6[schemas]
+        B7[api]
+        B8[core]
+    end
+
+    Frontend <-->|REST / JSON| Backend
+
+    style Frontend fill:#1E1B4B,color:#fff,stroke:#6366F1
+    style Backend fill:#052E16,color:#fff,stroke:#22C55E
+```
+
+<br/>
+
+## ✨ Features
+
+| | |
+|---|---|
+| 🔍 **Full pipeline visibility** | Inspect tokens, AST, NFA, DFA, and minimized DFA for any regex |
+| 🎨 **Interactive automata graphs** | React Flow rendering with START/ACCEPT notation, self-transitions, fit/zoom/reset/fullscreen |
+| 🧪 **Simulation lab** | Single and batch string testing with deterministic step traces |
+| 📊 **Stats & export** | Export results as JSON, CSV, and a full compilation report |
+| 🤖 **Optional AI assistant** | Falls back to deterministic local suggestions — the core compiler never depends on an external AI service |
+| 🐳 **One-command deploy** | Docker Compose + Nginx, CI-tested on every push |
+
+<br/>
+
+## 📐 Supported Syntax
+
+RegexLab targets **regular languages**, not engine-specific pattern tricks.
+
+| Category | Supported |
+|---|---|
+| Literals & concatenation | `abc`, implicit concatenation |
+| Alternation / grouping | <code>&#124;</code>, `(...)` |
+| Quantifiers | `*`, `+`, `?` |
+| Bounded repetition | `{m}`, `{m,n}`, `{m,}` (capped at 100) |
+| Epsilon | `ε`, `epsilon` |
+| Character classes | `[...]`, ranges, negated ASCII classes, `.` |
+| Shorthand classes | `\d` `\D` `\w` `\W` `\s` `\S` |
+| Escapes | `\xHH`, `\uHHHH`, escaped metacharacters |
+| Anchors | `^`, `$` |
+
+**Intentionally excluded:** backreferences, lookarounds, conditionals, recursion, and other zero-width engine-specific constructs — these fall outside regular-language automata and would break the FAANG-style compiler semantics this project demonstrates.
+
+<br/>
+
+## 🚀 Quick Start
 
 ### Backend
 
 ```bash
 cd backend
 python -m venv .venv
-# Linux/macOS
-source .venv/bin/activate
-# Windows PowerShell: .venv\\Scripts\\Activate.ps1
+source .venv/bin/activate      # Windows: .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
-
-API docs: `http://localhost:8000/docs`
+API docs → `http://localhost:8000/docs`
 
 ### Frontend
 
@@ -45,10 +163,67 @@ cd frontend
 npm install
 npm run dev
 ```
+App → `http://localhost:5173`
 
-Open `http://localhost:5173`.
+### Docker (full stack)
 
-### Tests and checks
+```bash
+docker compose up --build
+```
+App → `http://localhost:8080`
+
+<br/>
+
+## 🔌 API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/health` | Health check |
+| `POST` | `/api/compile` | `{ "regex": "(a\|b)*abb" }` → full pipeline artifacts |
+| `POST` | `/api/simulate` | `{ "regex": "a+", "text": "aaa" }` → step-by-step trace |
+| `POST` | `/api/batch-simulate` | `{ "regex": "a+", "strings": ["a", "aa", "b"] }` |
+| `POST` | `/api/assistant` | Optional — deterministic local fallback without credentials |
+
+<br/>
+
+## 🎬 Demo Flow
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant UI as RegexLab UI
+    participant API as FastAPI Backend
+
+    U->>UI: Enter (a|b)*abb
+    UI->>API: POST /api/compile
+    API-->>UI: tokens, AST, NFA, DFA, min-DFA
+    UI-->>U: Show token positions
+    UI-->>U: Explain AST & precedence
+    UI-->>U: Render Thompson NFA (ε-edges)
+    UI-->>U: Render Subset DFA
+    UI-->>U: Render Minimized DFA
+    U->>UI: Simulate "aabb" / "aba"
+    UI->>API: POST /api/simulate
+    API-->>UI: deterministic trace
+    U->>UI: Run batch tests
+    UI->>API: POST /api/batch-simulate
+    U->>UI: Export JSON / CSV / Report
+```
+
+1. Open `(a|b)*abb`
+2. Compile → show token positions
+3. Explain the AST and operator precedence
+4. Open the Thompson NFA → point out epsilon edges
+5. Open the DFA → explain epsilon closure and subsets
+6. Open the minimized DFA → explain partition refinement
+7. Simulate `aabb` and `aba`
+8. Run batch tests
+9. Export JSON, CSV, and a compilation report
+10. Show **Theory**, **Architecture**, `PROJECT_REPORT.md`, and `VIVA.md`
+
+<br/>
+
+## ✅ Testing
 
 ```bash
 make backend-test
@@ -58,43 +233,26 @@ cd frontend && npm run lint
 cd frontend && npm run build
 ```
 
-### Docker
+Backend coverage includes valid syntax, malformed syntax, shorthand classes, escaped operators, bounded repetition, anchors, wildcard matching, determinism, and minimized-automata correctness. CI runs Python tests, compilation checks, frontend build, and frontend tests on every push.
 
-```bash
-docker compose up --build
-```
+<br/>
 
-Open `http://localhost:8080`.
+## 🎯 Product Direction
 
-## API
+RegexLab is built as a **compiler-design workbench**, not a generic regex tester. The primary journey is:
 
-`GET /api/health`
+**Regex → Lexer → AST → Thompson NFA → Subset DFA → Hopcroft Min-DFA → Simulation**
 
-`POST /api/compile` with `{ "regex": "(a|b)*abb" }`
+The automata workspace features explicit START/ACCEPT notation, readable transition labels, dedicated self-transition rendering, state inspection, fit/zoom/reset/fullscreen controls, a legend, and a validation lab for single and batch inputs.
 
-`POST /api/simulate` with `{ "regex": "a+", "text": "aaa" }`
+See [`DESIGN_RESEARCH.md`](./DESIGN_RESEARCH.md) for the full product and UX rationale.
 
-`POST /api/batch-simulate` with `{ "regex": "a+", "strings": ["a", "aa", "b"] }`
+<br/>
 
-`POST /api/assistant` is optional. Without credentials it uses deterministic local suggestions, so the compiler never depends on an AI service.
+<div align="center">
 
-## Demo flow
+### ⭐ If this project helped you understand automata theory, consider starring it!
 
-1. Open `(a|b)*abb`.
-2. Compile and show token positions.
-3. Explain the AST and precedence.
-4. Open the Thompson NFA and point out epsilon edges.
-5. Open the DFA and explain epsilon closure and subsets.
-6. Open minimized DFA and explain partition refinement.
-7. Simulate `aabb` and `aba`.
-8. Run batch tests.
-9. Export JSON, CSV, and a compilation report.
-10. Show Theory, Architecture, PROJECT_REPORT.md, and VIVA.md.
+<img src="https://img.shields.io/badge/Made%20with-%E2%9D%A4%EF%B8%8F%20and%20Automata%20Theory-6366F1?style=for-the-badge" />
 
-## Project quality
-
-The backend has unit and API tests for valid syntax, malformed syntax, shorthand classes, escaped operators, bounded repetition, anchors, wildcard matching, determinism, and minimized automata. The CI workflow runs Python tests, compilation checks, frontend build, and frontend tests.
-
-## Product and UX direction
-
-RegexLab is designed as a compiler-design workbench rather than a generic regex tester. The primary journey is Regex → Lexer → AST → Thompson NFA → Subset DFA → Hopcroft Min-DFA → Simulation. The automata workspace uses explicit START/ACCEPT notation, readable transition labels, dedicated self-transition rendering, state inspection, fit/zoom/reset/fullscreen controls, a legend, and a validation lab for single and batch inputs. See `DESIGN_RESEARCH.md` for the product and UX rationale.
+</div>
